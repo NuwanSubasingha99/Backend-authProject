@@ -1,36 +1,32 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
+import roleRoute from './routes/role.route.js'
+import mongoose from 'mongoose'
 const app = express();
+
+// middleware
 dotenv.config();
+app.use(express.json());
 
-const uri = process.env.MONGO_URL
 
-const client = new MongoClient(uri, {
-  serverApi: ServerApiVersion.v1,
-});
-
-async function run() {
-  try {
-    // Connect the client to the server  (optional starting in v4.7)
-    await client.connect();
-
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
+app.use("/api/role",roleRoute);
 
 
 
 
+mongoose
+  .connect(
+    "mongodb+srv://sahanperera:12345@cluster0.203zw5r.mongodb.net/authDB?retryWrites=true&w=majority&appName=Cluster0"
+  )
+  .then(() => {
+    console.log("Connected to database!");
+    app.listen(3000, () => {
+      console.log("Server is running on port 3000");
+    });
+  })
+  .catch(() => {
+    console.log("Connection failed!");
+  });
 
 
-app.listen(8800,()=>{
-    run().catch(console.dir);
-    console.log('Backend is running on port 8800');
-})

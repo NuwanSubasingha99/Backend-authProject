@@ -2,6 +2,7 @@ import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
 import roleRoute from './routes/role.route.js'
+import authRoute from './routes/auth.route.js'
 import mongoose from 'mongoose'
 const app = express();
 
@@ -9,8 +10,8 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 
-
 app.use("/api/role",roleRoute);
+app.use("/api/auth",authRoute);
 
 
 

@@ -7,7 +7,7 @@ router.post('/register', register);
 
 router.get('/login', login);
 
-router.get("/register-admin", registerAdmin);
+router.post("/register-admin", registerAdmin);
 
 
 

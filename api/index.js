@@ -33,7 +33,7 @@ app.use((obj, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://sahanperera:12345@cluster0.203zw5r.mongodb.net/authDB?retryWrites=true&w=majority&appName=Cluster0"
+    process.env.MONGO_URL
   )
   .then(() => {
     console.log("Connected to database!");

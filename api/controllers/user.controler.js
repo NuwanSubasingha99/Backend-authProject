@@ -1,20 +1,25 @@
 import User from "../models/User.js";
+import { CreateError } from "../utils/error.js";
+import { CreateSuccess } from "../utils/success.js";
 
-export const getAllUsers = async (req,res,next)=>{
+export const getAllUsers = async (req, res, next) => {
     try {
         const users = await User.find({});
-        res.status(200).json(users);
-      } catch (error) {
-        res.status(500).json({ message: error.message + "abc" });
-      }
+        return next(CreateSuccess(200, "All users", users));
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
-export const getUser= async (req,res,next)=>{
+export const getUser = async (req, res, next) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const user = await User.findById(id);
-        res.status(200).json(user);
+        if (!user) {
+            return next(CreateError(500, "user not found"));
+        }
+        return next(CreateSuccess(200, "user found", user));
     } catch (error) {
-        res.status(500).json({ message: error.message }); 
+        res.status(500).json({ message: error.message });
     }
 }

@@ -1,14 +1,16 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import roleRoute from './routes/role.route.js'
-import authRoute from './routes/auth.route.js'
-import userRoute from './routes/user.route.js'
-import mongoose from 'mongoose'
+import roleRoute from './routes/role.route.js';
+import authRoute from './routes/auth.route.js';
+import userRoute from './routes/user.route.js';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 const app = express();
 
 // middleware
 dotenv.config();
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/role", roleRoute);
 app.use("/api/auth", authRoute);
